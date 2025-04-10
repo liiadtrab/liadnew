@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>בנה קורות חיים</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f4f4f4;
+      padding: 2rem;
+      direction: rtl;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 2rem;
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      padding: 1rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>בנה קורות חיים</h1>
+  <form id="cvForm">
+    <label for="fullName">שם מלא ופרטי יצירת קשר:</label>
+    <textarea id="fullName" name="fullName" required></textarea>
+
+    <label for="lastJob">תפקיד אחרון ותחומי אחריות:</label>
+    <textarea id="lastJob" name="lastJob" required></textarea>
+
+    <label for="education">השכלה / הכשרות:</label>
+    <textarea id="education" name="education" required></textarea>
+
+    <label for="skills">3 מיומנויות חזקות:</label>
+    <textarea id="skills" name="skills" required></textarea>
+
+    <label for="desiredRole">מה אתה מחפש עכשיו?</label>
+    <textarea id="desiredRole" name="desiredRole" required></textarea>
+
+    <button type="submit">שלח</button>
+  </form>
+
+  <script>
+    document.getElementById('cvForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const data = {
+        fullName: document.getElementById('fullName').value,
+        lastJob: document.getElementById('lastJob').value,
+        education: document.getElementById('education').value,
+        skills: document.getElementById('skills').value,
+        desiredRole: document.getElementById('desiredRole').value,
+      };
+
+      try {
+        const response = await fetch("YOUR_WEBHOOK_URL_HERE", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          alert("הטופס נשלח בהצלחה!");
+          document.getElementById('cvForm').reset();
+        } else {
+          alert("הייתה שגיאה בשליחה.");
+        }
+      } catch (error) {
+        alert("שגיאה בחיבור לשרת.");
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
