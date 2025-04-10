@@ -99,6 +99,8 @@
           body: JSON.stringify(data)
         });
 
+        console.log("Status code:", response.status); // שורת הבדיקה
+
         if (response.ok) {
           alert("הטופס נשלח בהצלחה!");
           document.getElementById('cvForm').reset();
