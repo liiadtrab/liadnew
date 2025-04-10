@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MyResume - בנה קורות חיים מקצועיים</title>
   <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -129,7 +130,6 @@
       background: #fff;
       padding: 2rem;
       border-radius: 12px;
-      white-space: pre-wrap;
       line-height: 1.6;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
@@ -193,7 +193,7 @@
     <button id="copyBtn" class="hidden" onclick="copyToClipboard()">📋 העתק לקליפבורד</button>
   </section>
   <footer>
-    נבנה באהבה ובסטייל על ידי <strong>Liad Trabelsi</strong>
+    נוצר על ידי <strong>Liad Trabelsi</strong>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -237,7 +237,7 @@
 
         const result = await response.text();
         document.getElementById("loader").style.display = "none";
-        document.getElementById("result").innerText = result;
+        document.getElementById("result").innerHTML = marked.parse(result);
         document.getElementById("result").classList.remove("hidden");
         document.getElementById("downloadBtn").classList.remove("hidden");
         document.getElementById("copyBtn").classList.remove("hidden");
