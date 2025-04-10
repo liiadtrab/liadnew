@@ -55,6 +55,16 @@
     button:hover {
       background-color: #0056b3;
     }
+
+    #result {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
   </style>
 </head>
 <body>
@@ -78,6 +88,8 @@
     <button type="submit">שלח</button>
   </form>
 
+  <div id="result"></div>
+
   <script>
     document.getElementById('cvForm').addEventListener('submit', async function (e) {
       e.preventDefault();
@@ -99,16 +111,14 @@
           body: JSON.stringify(data)
         });
 
-        console.log("Status code:", response.status); // שורת הבדיקה
+        const result = await response.json(); // מצפה שה־Make יחזיר JSON
+        console.log("תוצאה:", result);
 
-        if (response.ok) {
-          alert("הטופס נשלח בהצלחה!");
-          document.getElementById('cvForm').reset();
-        } else {
-          alert("הייתה שגיאה בשליחה.");
-        }
+        // נציג את קורות החיים באתר
+        document.getElementById("result").innerText = result.resume;
+
       } catch (error) {
-        alert("שגיאה בחיבור לשרת.");
+        alert("שגיאה בשליחה או בקבלת תגובה.");
         console.error(error);
       }
     });
