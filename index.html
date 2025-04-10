@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyResume - יצירת קורות חיים</title>
+  <title>MyResume - בנה קורות חיים מקצועיים</title>
   <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -12,27 +13,35 @@
       background: linear-gradient(to bottom, #f0f4f8, #e5e9f0);
       color: #333;
       direction: rtl;
-      text-align: center;
     }
 
     header {
-      background-color: #fff;
+      background-color: #ffffff;
       padding: 2rem 1rem 1rem;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
     }
 
     header img {
-      max-width: 300px;
+      max-width: 320px;
+      transition: transform 0.3s ease;
+    }
+
+    header img:hover {
+      transform: scale(1.05);
     }
 
     .hero {
+      text-align: center;
       padding: 4rem 1rem 2rem;
+      animation: fadeInUp 1s ease-in-out;
     }
 
     .hero h1 {
-      font-size: 2.7rem;
-      color: #1e1e2f;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
+      color: #1e1e2f;
     }
 
     .hero p {
@@ -40,112 +49,205 @@
       color: #555;
       max-width: 600px;
       margin: 0 auto;
-      line-height: 1.6;
     }
 
-    .button-start {
-      display: inline-block;
-      margin-top: 2.5rem;
-      padding: 1rem 2rem;
-      font-size: 1.2rem;
-      color: white;
+    .form-section {
+      max-width: 700px;
+      margin: 3rem auto;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 2rem;
+      width: 100%;
+      background-color: #6a11cb;
       background-image: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+      color: white;
+      padding: 1rem;
       border: none;
       border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.3s ease;
+      font-size: 1.1rem;
+      cursor: pointer;
     }
 
-    .button-start:hover {
+    button:hover {
       opacity: 0.9;
     }
 
-    footer {
-      margin-top: 4rem;
-      padding: 1rem;
-      color: #777;
-      font-size: 0.9rem;
+    #loader {
+      display: none;
+      text-align: center;
+      margin-top: 2rem;
     }
 
-    /* Pop-up modal styles */
-    .popup {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      justify-content: center;
-      align-items: center;
+    .spinner {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #2575fc;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
     }
-    .popup-content {
-      background-color: white;
-      padding: 2rem;
-      border-radius: 10px;
-      width: 80%;
-      max-width: 600px;
-      text-align: center;
-    }
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 1.5rem;
-      cursor: pointer;
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #result {
+      max-width: 700px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      line-height: 1.6;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    #copyBtn {
+      background-color: #444;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      header img {
+        max-width: 200px;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="MyResume לוגו">
+    <img src="logo.png" alt="MyResume לוגו" />
   </header>
-
   <section class="hero">
-    <h1>ברוך הבא ל־MyResume</h1>
-    <p>
-      הפלטפורמה החכמה והפשוטה ביותר ליצירת קורות חיים מקצועיים תוך שניות. <br/>
-      ממלאים טופס קצר – והבינה המלאכותית תעשה את כל השאר.
-    </p>
-    <button class="button-start" onclick="showPopup()">הראה קורות חיים</button>
+    <h1>בנה קורות חיים מקצועיים בקלות</h1>
+    <p>מלא את הפרטים שלך, לחץ על כפתור - וקבל קורות חיים מדויקים, ברורים ומוכנים לשימוש.</p>
   </section>
-
-  <!-- Pop-up modal -->
-  <div id="popup" class="popup">
-    <div class="popup-content">
-      <span class="close-btn" onclick="closePopup()">×</span>
-      <h2>הנה קורות החיים שלך:</h2>
-      <div id="cvContent"></div>
-      <button onclick="downloadPDF()">הורד כ-PDF</button>
+  <section class="form-section">
+    <form id="cvForm">
+      <label for="fullName">שם מלא ופרטי יצירת קשר:</label>
+      <textarea id="fullName" required></textarea>
+      <label for="lastJob">תפקיד אחרון ותחומי אחריות:</label>
+      <textarea id="lastJob" required></textarea>
+      <label for="education">השכלה / הכשרות:</label>
+      <textarea id="education" required></textarea>
+      <label for="skills">3 מיומנויות חזקות:</label>
+      <textarea id="skills" required></textarea>
+      <label for="desiredRole">מה אתה מחפש עכשיו?</label>
+      <textarea id="desiredRole" required></textarea>
+      <button type="submit">צור את קורות החיים</button>
+    </form>
+    <div id="loader">
+      <div class="spinner"></div>
+      <p>בונים לך קורות חיים...</p>
     </div>
-  </div>
-
+    <div id="result" class="hidden"></div>
+    <button id="downloadBtn" class="hidden" onclick="downloadPDF()">📄 הורד כקובץ PDF</button>
+    <button id="copyBtn" class="hidden" onclick="copyToClipboard()">📋 העתק לקליפבורד</button>
+  </section>
   <footer>
     נוצר על ידי <strong>Liad Trabelsi</strong>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
-    // Function to show the popup
-    function showPopup() {
-      document.getElementById("popup").style.display = "flex";
-      // Displaying content (you can replace this with dynamic content)
-      document.getElementById("cvContent").innerHTML = localStorage.getItem("cvContent");
-    }
-
-    // Function to close the popup
-    function closePopup() {
-      document.getElementById("popup").style.display = "none";
-    }
-
-    // Function to download as PDF (You can integrate a PDF generation library)
     function downloadPDF() {
-      alert("הורדה כ־PDF בהכנה!");
+      const element = document.getElementById("result");
+      element.classList.remove("hidden");
+      setTimeout(() => {
+        html2pdf().from(element).save("cv.pdf");
+      }, 300);
     }
+
+    function copyToClipboard() {
+      const text = document.getElementById("result").innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("הטקסט הועתק!");
+      });
+    }
+
+    document.getElementById('cvForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      document.getElementById("loader").style.display = "block";
+      document.getElementById("result").classList.add("hidden");
+      document.getElementById("downloadBtn").classList.add("hidden");
+      document.getElementById("copyBtn").classList.add("hidden");
+
+      const data = {
+        fullName: document.getElementById('fullName').value,
+        lastJob: document.getElementById('lastJob').value,
+        education: document.getElementById('education').value,
+        skills: document.getElementById('skills').value,
+        desiredRole: document.getElementById('desiredRole').value,
+      };
+
+      try {
+        const response = await fetch("https://hook.eu2.make.com/hvhp4og7trftdb5tmy7zz7zg929kjc3k", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.text();
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("result").innerHTML = marked.parse(result);
+        document.getElementById("result").classList.remove("hidden");
+        document.getElementById("downloadBtn").classList.remove("hidden");
+        document.getElementById("copyBtn").classList.remove("hidden");
+
+      } catch (error) {
+        alert("שגיאה בשליחה או בקבלת תגובה.");
+        console.error(error);
+        document.getElementById("loader").style.display = "none";
+      }
+    });
   </script>
 </body>
 </html>
