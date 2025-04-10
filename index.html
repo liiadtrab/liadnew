@@ -122,13 +122,21 @@
   </div>
 
   <div id="result" class="hidden"></div>
+  <button id="downloadBtn" class="hidden" onclick="downloadPDF()">📄 הורד כקובץ PDF</button>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
+    function downloadPDF() {
+      const element = document.getElementById("result");
+      html2pdf().from(element).save("cv.pdf");
+    }
+
     document.getElementById('cvForm').addEventListener('submit', async function (e) {
       e.preventDefault();
 
       document.getElementById("loader").style.display = "block";
       document.getElementById("result").classList.add("hidden");
+      document.getElementById("downloadBtn").classList.add("hidden");
 
       const data = {
         fullName: document.getElementById('fullName').value,
@@ -152,6 +160,7 @@
         document.getElementById("loader").style.display = "none";
         document.getElementById("result").innerText = result;
         document.getElementById("result").classList.remove("hidden");
+        document.getElementById("downloadBtn").classList.remove("hidden");
 
       } catch (error) {
         alert("שגיאה בשליחה או בקבלת תגובה.");
