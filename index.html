@@ -111,11 +111,8 @@
           body: JSON.stringify(data)
         });
 
-        const result = await response.json(); // מצפה שה־Make יחזיר JSON
-        console.log("תוצאה:", result);
-
-        // נציג את קורות החיים באתר
-        document.getElementById("result").innerText = result.resume;
+        const result = await response.text(); // שינוי קריטי כאן
+        document.getElementById("result").innerText = result;
 
       } catch (error) {
         alert("שגיאה בשליחה או בקבלת תגובה.");
