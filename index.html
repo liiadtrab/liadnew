@@ -124,11 +124,17 @@
   <div id="result" class="hidden"></div>
   <button id="downloadBtn" class="hidden" onclick="downloadPDF()">📄 הורד כקובץ PDF</button>
 
+  <!-- PDF LIBRARY -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   <script>
     function downloadPDF() {
       const element = document.getElementById("result");
-      html2pdf().from(element).save("cv.pdf");
+      element.classList.remove("hidden"); // ודא שהתוצאה גלויה
+
+      setTimeout(() => {
+        html2pdf().from(element).save("cv.pdf");
+      }, 300); // המתן רגע כדי לוודא שהתוכן מוצג
     }
 
     document.getElementById('cvForm').addEventListener('submit', async function (e) {
@@ -164,10 +170,4 @@
 
       } catch (error) {
         alert("שגיאה בשליחה או בקבלת תגובה.");
-        console.error(error);
-        document.getElementById("loader").style.display = "none";
-      }
-    });
-  </script>
-</body>
-</html>
+        console.error(error
