@@ -6,24 +6,24 @@
   <title>בנה קורות חיים</title>
   <style>
     body {
-      font-family: sans-serif;
-      background-color: #f4f4f4;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
       padding: 2rem;
       direction: rtl;
     }
 
     h1 {
       text-align: center;
-      color: #333;
+      color: #222;
     }
 
     form {
-      max-width: 600px;
+      max-width: 700px;
       margin: 0 auto;
       background: white;
       padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
     label {
@@ -32,12 +32,13 @@
       font-weight: bold;
     }
 
-    input, textarea {
+    textarea {
       width: 100%;
       padding: 0.75rem;
       margin-top: 0.5rem;
-      border-radius: 5px;
+      border-radius: 8px;
       border: 1px solid #ccc;
+      resize: vertical;
     }
 
     button {
@@ -47,28 +48,55 @@
       color: white;
       padding: 1rem;
       border: none;
-      border-radius: 5px;
-      font-size: 1rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
     button:hover {
       background-color: #0056b3;
     }
 
+    #loader {
+      display: none;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .spinner {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #007bff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
     #result {
-      max-width: 600px;
+      max-width: 700px;
       margin: 2rem auto;
       background: #fff;
       padding: 2rem;
-      border-radius: 8px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
       white-space: pre-wrap;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      line-height: 1.6;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>בנה קורות חיים</h1>
+  <h1>צור קורות חיים מקצועיים</h1>
   <form id="cvForm">
     <label for="fullName">שם מלא ופרטי יצירת קשר:</label>
     <textarea id="fullName" name="fullName" required></textarea>
@@ -88,11 +116,19 @@
     <button type="submit">שלח</button>
   </form>
 
-  <div id="result"></div>
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>בונים לך קורות חיים...</p>
+  </div>
+
+  <div id="result" class="hidden"></div>
 
   <script>
     document.getElementById('cvForm').addEventListener('submit', async function (e) {
       e.preventDefault();
+
+      document.getElementById("loader").style.display = "block";
+      document.getElementById("result").classList.add("hidden");
 
       const data = {
         fullName: document.getElementById('fullName').value,
@@ -111,12 +147,16 @@
           body: JSON.stringify(data)
         });
 
-        const result = await response.text(); // שינוי קריטי כאן
+        const result = await response.text();
+
+        document.getElementById("loader").style.display = "none";
         document.getElementById("result").innerText = result;
+        document.getElementById("result").classList.remove("hidden");
 
       } catch (error) {
         alert("שגיאה בשליחה או בקבלת תגובה.");
         console.error(error);
+        document.getElementById("loader").style.display = "none";
       }
     });
   </script>
