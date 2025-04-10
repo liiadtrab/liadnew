@@ -16,18 +16,25 @@
 
     header {
       background-color: #ffffff;
-      padding: 1rem;
+      padding: 2rem 1rem 1rem;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       text-align: center;
+      animation: fadeIn 1s ease-in-out;
     }
 
     header img {
-      max-width: 180px;
+      max-width: 320px;
+      transition: transform 0.3s ease;
+    }
+
+    header img:hover {
+      transform: scale(1.05);
     }
 
     .hero {
       text-align: center;
       padding: 4rem 1rem 2rem;
+      animation: fadeInUp 1s ease-in-out;
     }
 
     .hero h1 {
@@ -50,6 +57,7 @@
       padding: 2rem;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      animation: fadeInUp 1s ease-in-out;
     }
 
     label {
@@ -105,6 +113,16 @@
       100% { transform: rotate(360deg); }
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     #result {
       max-width: 700px;
       margin: 2rem auto;
@@ -116,8 +134,31 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
+    #copyBtn {
+      background-color: #444;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
     .hidden {
       display: none;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      header img {
+        max-width: 200px;
+      }
     }
   </style>
 </head>
@@ -149,7 +190,12 @@
     </div>
     <div id="result" class="hidden"></div>
     <button id="downloadBtn" class="hidden" onclick="downloadPDF()">📄 הורד כקובץ PDF</button>
+    <button id="copyBtn" class="hidden" onclick="copyToClipboard()">📋 העתק לקליפבורד</button>
   </section>
+  <footer>
+    נבנה באהבה ובסטייל על ידי <strong>Liad Trabelsi</strong>
+  </footer>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
     function downloadPDF() {
@@ -160,11 +206,19 @@
       }, 300);
     }
 
+    function copyToClipboard() {
+      const text = document.getElementById("result").innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("הטקסט הועתק!");
+      });
+    }
+
     document.getElementById('cvForm').addEventListener('submit', async function (e) {
       e.preventDefault();
       document.getElementById("loader").style.display = "block";
       document.getElementById("result").classList.add("hidden");
       document.getElementById("downloadBtn").classList.add("hidden");
+      document.getElementById("copyBtn").classList.add("hidden");
 
       const data = {
         fullName: document.getElementById('fullName').value,
@@ -186,6 +240,7 @@
         document.getElementById("result").innerText = result;
         document.getElementById("result").classList.remove("hidden");
         document.getElementById("downloadBtn").classList.remove("hidden");
+        document.getElementById("copyBtn").classList.remove("hidden");
 
       } catch (error) {
         alert("שגיאה בשליחה או בקבלת תגובה.");
