@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyResume - דף הבית</title>
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(to bottom, #f0f4f8, #e5e9f0);
+      color: #333;
+      direction: rtl;
+      text-align: center;
+    }
+
+    header {
+      background-color: #fff;
+      padding: 2rem 1rem 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    header img {
+      max-width: 300px;
+      transition: transform 0.3s ease;
+    }
+
+    header img:hover {
+      transform: scale(1.05);
+    }
+
+    .hero {
+      padding: 4rem 1rem 2rem;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    .hero h1 {
+      font-size: 2.7rem;
+      color: #1e1e2f;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .button-start {
+      display: inline-block;
+      margin-top: 2.5rem;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      color: white;
+      background-image: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .button-start:hover {
+      opacity: 0.9;
+    }
+
+    footer {
+      margin-top: 4rem;
+      padding: 1rem;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      header img {
+        max-width: 200px;
+      }
+
+      .button-start {
+        width: 90%;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="MyResume לוגו">
+  </header>
+
+  <section class="hero">
+    <h1>ברוך הבא ל־MyResume</h1>
+    <p>
+      הפלטפורמה החכמה והפשוטה ביותר ליצירת קורות חיים מקצועיים תוך שניות. <br/>
+      ממלאים טופס קצר – והבינה המלאכותית תעשה את כל השאר.
+    </p>
+    <a class="button-start" href="cv.html">🚀 התחל עכשיו</a>
+  </section>
+
+  <footer>
+    נוצר על ידי <strong>Liad Trabelsi</strong>
+  </footer>
+</body>
+</html>
